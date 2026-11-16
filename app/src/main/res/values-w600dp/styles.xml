@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Form width on wide screens (tablets, landscape): keep it narrow and centered -->
+    <style name="FormContainer">
+        <item name="android:layout_width">480dp</item>
+    </style>
+
+    <!-- Dashboard width on wide screens: a bit wider than the forms -->
+    <style name="DashboardContainer">
+        <item name="android:layout_width">640dp</item>
+    </style>
+</resources>

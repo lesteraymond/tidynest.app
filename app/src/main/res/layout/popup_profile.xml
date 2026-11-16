@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Profile dropdown shown under the top right circle -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="160dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="6dp">
+
+    <!-- Log Out -->
+    <TextView
+        android:id="@+id/popupLogOut"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/bg_menu_item"
+        android:drawableStart="@drawable/ic_logout"
+        android:drawablePadding="10dp"
+        android:drawableTint="@color/priority_urgent"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="10dp"
+        android:text="Log Out"
+        android:textColor="@color/priority_urgent"
+        android:textStyle="bold" />
+</LinearLayout>

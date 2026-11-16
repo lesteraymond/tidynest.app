@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">TidyNest</string>
+    <string name="terms">I agree to the <b><u>Household Guidelines</u></b> &amp; <b><u>Terms of Service</u></b></string>
+
+    <string name="terms_prefix">I agree to the </string>
+    <string name="terms_guidelines_link">Household Guidelines</string>
+    <string name="terms_and"> &amp; </string>
+    <string name="terms_tos_link">Terms of Service</string>
+    <string name="close">Close</string>
+
+    <string name="guidelines_title">Household Guidelines</string>
+    <string name="guidelines_body">1. Do your fair share. Complete the chores assigned to you on time.\n\n2. Be honest. Only mark a chore as done once it is actually finished.\n\n3. Communicate. Let your household know early if you cannot complete a task so it can be reassigned.\n\n4. Be respectful. Give constructive feedback and keep the nest friendly.\n\n5. Keep it fair. Rotate tasks so that no one carries the workload alone.</string>
+
+    <string name="tos_title">Terms of Service</string>
+    <string name="tos_body">1. Acceptance. By creating an account you agree to these terms.\n\n2. Your account. You are responsible for keeping your password secure and for activity under your account.\n\n3. Your data. TidyNest stores your name, email and chore data on your device to provide the service. We do not sell your personal information.\n\n4. Acceptable use. Do not use the app to harass others or to misuse other people\'s information.\n\n5. Changes. We may update these terms from time to time. Continued use of the app means you accept the updated terms.</string>
+</resources>
