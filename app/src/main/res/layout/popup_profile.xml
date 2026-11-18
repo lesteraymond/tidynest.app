@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Profile dropdown shown under the top right circle -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="160dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="6dp">
 
-    <!-- Log Out -->
     <TextView
         android:id="@+id/popupLogOut"
         android:layout_width="match_parent"

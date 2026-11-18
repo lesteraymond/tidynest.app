@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-/** Pads the screen so content sits below the status bar and above the nav bar / keyboard. */
 fun Activity.applySystemBarPadding() {
     val content = findViewById<ViewGroup>(android.R.id.content).getChildAt(0)
     ViewCompat.setOnApplyWindowInsetsListener(content) { v, insets ->

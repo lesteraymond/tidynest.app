@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Form width on phones: use the whole screen -->
     <style name="FormContainer">
         <item name="android:layout_width">match_parent</item>
     </style>
 
-    <!-- Dashboard width on phones: use the whole screen -->
     <style name="DashboardContainer">
         <item name="android:layout_width">match_parent</item>
     </style>
 
-    <!-- Label above each text box -->
     <style name="FieldLabel">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -21,7 +18,6 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <!-- White rounded box that holds the icon and text box -->
     <style name="FieldBox">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">52dp</item>
@@ -60,9 +56,7 @@
     </style>
 
 
-    <!-- ===== Add Chore page ===== -->
 
-    <!-- Bold title of each section, e.g. "Room or Area" -->
     <style name="SectionLabel">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
@@ -72,7 +66,6 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <!-- Small note on the right of a section title -->
     <style name="SideNote">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -80,7 +73,6 @@
         <item name="android:textSize">11sp</item>
     </style>
 
-    <!-- Row holding a section title and side note -->
     <style name="SectionRow">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -90,7 +82,6 @@
         <item name="android:orientation">horizontal</item>
     </style>
 
-    <!-- Room chip (Kitchen, Bathroom, ...) -->
     <style name="RoomChip">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">40dp</item>
@@ -102,7 +93,6 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <!-- Duration chip (15 mins, 30 mins, ...) -->
     <style name="DurationChip" parent="RoomChip">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
@@ -111,7 +101,6 @@
         <item name="android:paddingHorizontal">0dp</item>
     </style>
 
-    <!-- Day box (MON, TUE, ...) -->
     <style name="DayBox">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">68dp</item>
@@ -126,7 +115,6 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <!-- Priority card (Low, Medium, High, Urgent) -->
     <style name="PriorityCard">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
@@ -166,16 +154,13 @@
         <item name="android:ellipsize">end</item>
     </style>
 
-    <!-- ===== Dashboard page ===== -->
 
-    <!-- Priority filter chip (All, Urgent, High, ...) -->
     <style name="FilterChip" parent="RoomChip">
         <item name="android:layout_height">34dp</item>
         <item name="android:paddingHorizontal">14dp</item>
         <item name="android:textSize">13sp</item>
     </style>
 
-    <!-- Small day square on a chore card (M T W T F S S) -->
     <style name="MiniDay">
         <item name="android:layout_width">22dp</item>
         <item name="android:layout_height">22dp</item>
@@ -187,7 +172,6 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <!-- Round white icon button (home, bell) -->
     <style name="RoundIconButton">
         <item name="android:layout_width">40dp</item>
         <item name="android:layout_height">40dp</item>
@@ -196,7 +180,6 @@
         <item name="android:tint">@color/dark_green</item>
     </style>
 
-    <!-- Bottom navigation item -->
     <style name="NavItem">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>

@@ -6,7 +6,6 @@
     
     android:orientation="vertical">
 
-    <!-- Top bar: logo, title, profile picture -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,7 +37,6 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <!-- Tap to open the profile dropdown -->
         <TextView
             android:id="@+id/topAvatar"
             android:layout_width="32dp"
@@ -55,7 +53,6 @@
         android:layout_height="1dp"
         android:background="@color/border" />
 
-    <!-- Page content + floating "Add New Chore" button -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -66,12 +63,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!-- Centers the content on wide screens -->
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <!-- Full width on phones, fixed width on tablets (see DashboardContainer style) -->
                 <LinearLayout
                     style="@style/DashboardContainer"
                     android:layout_height="wrap_content"
@@ -82,7 +77,6 @@
                     android:paddingBottom="24dp">
 
 
-                    <!-- Greeting -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -90,7 +84,6 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <!-- Profile picture with green "online" dot -->
                         <FrameLayout
                             android:layout_width="52dp"
                             android:layout_height="52dp">
@@ -136,7 +129,6 @@
                             android:contentDescription="Home"
                             android:src="@drawable/ic_home" />
 
-                        <!-- Bell with red dot -->
                         <FrameLayout
                             android:layout_width="40dp"
                             android:layout_height="40dp"
@@ -158,14 +150,12 @@
                         </FrameLayout>
                     </LinearLayout>
 
-                    <!-- Summary cards -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:orientation="horizontal">
 
-                        <!-- Active chores -->
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -224,7 +214,6 @@
                                 android:textSize="12sp" />
                         </LinearLayout>
 
-                        <!-- Done chores with progress ring -->
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -297,7 +286,6 @@
                         </LinearLayout>
                     </LinearLayout>
 
-                    <!-- Search -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
@@ -322,7 +310,6 @@
                             android:textSize="14sp" />
                     </LinearLayout>
 
-                    <!-- Pending / Done toggle -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -340,7 +327,6 @@
                             android:tag="Done" />
                     </LinearLayout>
 
-                    <!-- Priority filters (scroll sideways) -->
                     <HorizontalScrollView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -379,14 +365,12 @@
                         </LinearLayout>
                     </HorizontalScrollView>
 
-                    <!-- Chore cards are added here by Dashboard.kt -->
                     <LinearLayout
                         android:id="@+id/choreList"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical" />
 
-                    <!-- Shown when there is nothing to list -->
                     <TextView
                         android:id="@+id/emptyText"
                         android:layout_width="match_parent"
@@ -401,7 +385,6 @@
         </ScrollView>
 </FrameLayout>
 
-    <!-- Bottom navigation -->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -428,7 +411,6 @@
                 android:textColor="@color/green" />
         </LinearLayout>
 
-        <!-- Green round "+" button -->
         <LinearLayout
             android:id="@+id/navAdd"
             style="@style/NavItem">

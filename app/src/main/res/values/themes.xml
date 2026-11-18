@@ -2,7 +2,6 @@
 <resources>
 
     <style name="Theme.TidyNest" parent="android:Theme.Material.Light.NoActionBar">
-        <!-- Makes switches, checkboxes and text cursors green -->
         <item name="android:colorAccent">@color/green</item>
     </style>
 </resources>

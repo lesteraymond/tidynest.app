@@ -87,7 +87,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DURATION"
+                android:text="TIME · DURATION"
                 android:textColor="@color/gray_text"
                 android:textSize="11sp" />
 
@@ -232,6 +232,19 @@
             android:background="@drawable/bg_field"
             android:gravity="center"
             android:text="Close"
+            android:textColor="@color/dark_text"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/detailEdit"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_field"
+            android:gravity="center"
+            android:text="Edit"
             android:textColor="@color/dark_text"
             android:textStyle="bold" />
 

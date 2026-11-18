@@ -33,6 +33,10 @@ class History : ComponentActivity() {
                 .setNegativeButton("Cancel", null)
                 .show()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
         load()
     }
 
@@ -52,7 +56,8 @@ class History : ComponentActivity() {
                 ).toString()
             } else "earlier"
             row.findViewById<TextView>(R.id.historyDetails).text =
-                "${chore.room} • ${chore.duration} • done $whenDone"
+                "${chore.room} • ${chore.timeLabel} • done $whenDone"
+            row.setOnClickListener { showChoreDetails(chore, fromHistory = true) { load() } }
             row.findViewById<View>(R.id.historyUndo).setOnClickListener {
                 database.setChoreDone(chore.id, false)
                 load()

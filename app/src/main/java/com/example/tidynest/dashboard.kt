@@ -1,5 +1,6 @@
 package com.example.tidynest
 
+import android.Manifest
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -16,6 +17,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doAfterTextChanged
 
 class Dashboard : ComponentActivity() {
@@ -84,7 +86,6 @@ class Dashboard : ComponentActivity() {
             startActivity(Intent(this, History::class.java))
         }
 
-        // Home and Tasks: reset search/filter and jump back to the top
         val goHome = View.OnClickListener {
             search.setText("")
             currentFilter = "All"
@@ -97,6 +98,12 @@ class Dashboard : ComponentActivity() {
 
         val topAvatar = findViewById<View>(R.id.topAvatar)
         topAvatar.setOnClickListener { showProfileMenu(topAvatar) }
+
+        if (!Reminders.canNotify(this)) {
+            registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
+                .launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+        Reminders.schedule(this)
     }
 
     private fun showProfileMenu(anchor: View) {
@@ -122,66 +129,21 @@ class Dashboard : ComponentActivity() {
         popup.showAsDropDown(anchor, 0, gap, Gravity.END)
     }
 
-    /** Pending chores scheduled for today, so reminders have something real to show. */
-    private fun dueToday(): List<Chore> {
-        val today = listOf("SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT")[
-            java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_WEEK) - 1
-        ]
-        return database.getChores(userId).filter { !it.done && it.days.contains(today) }
-    }
+    private fun dueToday(chores: List<Chore> = database.getChores(userId)): List<Chore> =
+        chores.filter { !it.doneToday && it.isScheduledToday }.sortedBy { it.timeMinutes }
 
     private fun showNotifications() {
         val due = dueToday()
         val message = if (due.isEmpty()) {
             "You're all caught up. No chores due today."
         } else {
-            due.joinToString("\n") { "• ${it.title} (${it.room}, ${it.priority})" }
+            due.joinToString("\n") { "• ${it.title} (${it.timeLabel}, ${it.room})" }
         }
         AlertDialog.Builder(this)
             .setTitle(if (due.isEmpty()) "Notifications" else "Due today (${due.size})")
             .setMessage(message)
             .setPositiveButton("OK", null)
             .show()
-    }
-
-    private fun showDetails(chore: Chore) {
-        val view = layoutInflater.inflate(R.layout.dialog_chore_details, null)
-        view.findViewById<TextView>(R.id.detailTitle).text = chore.title
-        val badge = view.findViewById<TextView>(R.id.detailBadge)
-        val (bg, fg) = when (chore.priority) {
-            "Urgent" -> R.color.urgent_bg to R.color.priority_urgent
-            "High" -> R.color.high_bg to R.color.high_text
-            "Medium" -> R.color.lavender to R.color.priority_medium
-            else -> R.color.light_green to R.color.green
-        }
-        badge.text = "• ${chore.priority.uppercase()}"
-        badge.backgroundTintList = ColorStateList.valueOf(getColor(bg))
-        badge.setTextColor(getColor(fg))
-        view.findViewById<TextView>(R.id.detailRoom).text = chore.room
-        val dayRow = view.findViewById<LinearLayout>(R.id.detailDays)
-        val dayNames = listOf("MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN")
-        for (i in dayNames.indices) {
-            dayRow.getChildAt(i).isSelected = chore.days.contains(dayNames[i])
-        }
-        view.findViewById<TextView>(R.id.detailDuration).text = chore.duration
-        view.findViewById<TextView>(R.id.detailAssigned).text = chore.assignedTo
-        view.findViewById<TextView>(R.id.detailReminder).text = if (chore.reminder) "On" else "Off"
-        view.findViewById<TextView>(R.id.detailNotes).text =
-            chore.notes.ifEmpty { "No notes" }
-        view.findViewById<TextView>(R.id.detailStatus).text =
-            if (chore.done) "Done" else "Pending"
-
-        val dialog = AlertDialog.Builder(this).setView(view).create()
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        val toggle = view.findViewById<TextView>(R.id.detailToggle)
-        toggle.text = if (chore.done) "Mark pending" else "Mark done"
-        toggle.setOnClickListener {
-            database.setChoreDone(chore.id, !chore.done)
-            loadChores()
-            dialog.dismiss()
-        }
-        view.findViewById<View>(R.id.detailClose).setOnClickListener { dialog.dismiss() }
-        dialog.show()
     }
 
     private fun confirmDelete(chore: Chore) {
@@ -204,13 +166,14 @@ class Dashboard : ComponentActivity() {
 
     private fun loadChores() {
         val allChores = database.getChores(userId)
-        val done = allChores.count { it.done }
+        val done = allChores.count { it.doneToday }
         val total = allChores.size
         val percent = if (total == 0) 0 else done * 100 / total
+        val leftToday = dueToday(allChores).size
 
         findViewById<View>(R.id.bellDot).visibility =
-            if (dueToday().isEmpty()) View.GONE else View.VISIBLE
-        findViewById<TextView>(R.id.choresLeft).text = "${total - done} ${if (total - done == 1) "chore" else "chores"} left today"
+            if (leftToday == 0) View.GONE else View.VISIBLE
+        findViewById<TextView>(R.id.choresLeft).text = "$leftToday ${if (leftToday == 1) "chore" else "chores"} left today"
         findViewById<TextView>(R.id.activeCount).text = total.toString()
         findViewById<TextView>(R.id.doneCount).text = "$done Done"
         findViewById<ProgressBar>(R.id.progressRing).progress = percent
@@ -228,7 +191,7 @@ class Dashboard : ComponentActivity() {
             chip.isSelected = status == currentStatus
         }
 
-        val inStatus = allChores.filter { it.done == (currentStatus == "Done") }
+        val inStatus = allChores.filter { it.doneToday == (currentStatus == "Done") }
         for (filter in filters) {
             val priority = filter.tag.toString()
             val count = if (priority == "All") inStatus.size else inStatus.count { it.priority == priority }
@@ -237,7 +200,7 @@ class Dashboard : ComponentActivity() {
         }
 
         val query = search.text.toString().trim()
-        val shown = inStatus.filter { chore ->
+        val shown = inStatus.sortedBy { it.timeMinutes }.filter { chore ->
             (currentFilter == "All" || chore.priority == currentFilter) &&
                 (chore.title.contains(query, ignoreCase = true) ||
                     chore.room.contains(query, ignoreCase = true))
@@ -265,7 +228,7 @@ class Dashboard : ComponentActivity() {
         val details = card.findViewById<TextView>(R.id.details)
 
         title.text = chore.title
-        details.text = "${chore.room} • ${chore.duration}"
+        details.text = "${chore.room} • ${chore.timeLabel} • ${chore.duration}"
 
         val (background, textColor) = when (chore.priority) {
             "Urgent" -> R.color.urgent_bg to R.color.priority_urgent
@@ -282,21 +245,21 @@ class Dashboard : ComponentActivity() {
             days.getChildAt(i).isSelected = chore.days.contains(dayNames[i])
         }
 
-        if (chore.done) {
+        if (chore.doneToday) {
             check.isSelected = true
             title.paintFlags = title.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             card.alpha = 0.6f
         }
 
         card.findViewById<View>(R.id.delete).setOnClickListener { confirmDelete(chore) }
-        card.setOnClickListener { showDetails(chore) }
+        card.setOnClickListener { showChoreDetails(chore) { loadChores() } }
         card.setOnLongClickListener {
             confirmDelete(chore)
             true
         }
 
         check.setOnClickListener {
-            database.setChoreDone(chore.id, !chore.done)
+            database.setChoreDone(chore.id, !chore.doneToday)
             loadChores()
         }
 
